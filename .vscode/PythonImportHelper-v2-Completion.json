@@ -57,6 +57,22 @@
         "documentation": {}
     },
     {
+        "label": "serializers",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "status",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -65,11 +81,43 @@
         "documentation": {}
     },
     {
-        "label": "render",
-        "importPath": "django.shortcuts",
-        "description": "django.shortcuts",
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
         "isExtraImport": true,
-        "detail": "django.shortcuts",
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "APIView",
+        "importPath": "rest_framework.views",
+        "description": "rest_framework.views",
+        "isExtraImport": true,
+        "detail": "rest_framework.views",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
         "documentation": {}
     },
     {
@@ -95,14 +143,6 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
         "documentation": {}
     },
     {
@@ -186,6 +226,51 @@
         "documentation": {}
     },
     {
+        "label": "AvaliacaoSerializer",
+        "kind": 6,
+        "importPath": "cursos.serializers",
+        "description": "cursos.serializers",
+        "peekOfCode": "class AvaliacaoSerializer(serializers.ModelSerializer):\n    class Meta:\n        extra_kwargs = {\n            'email': {'write_only' : True}\n        }\n        model = Avaliacao\n        fields = (\n            'id',\n            'curso',\n            'nome',",
+        "detail": "cursos.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "CursoSerializer",
+        "kind": 6,
+        "importPath": "cursos.serializers",
+        "description": "cursos.serializers",
+        "peekOfCode": "class CursoSerializer(serializers.ModelSerializer):\n    class Meta:\n        model = Curso\n        fields = (\n            'id',\n            'titulo',\n            'url',\n            'criacao',\n            'ativo'\n        )",
+        "detail": "cursos.serializers",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "cursos.urls",
+        "description": "cursos.urls",
+        "peekOfCode": "urlpatterns = [\n    path('cursos/', CursoApiView.as_view(), name='cursos'),\n    path('avaliacoes/', AvaliacaoApiView.as_view(), name='avaliacoes')\n]",
+        "detail": "cursos.urls",
+        "documentation": {}
+    },
+    {
+        "label": "CursoApiView",
+        "kind": 6,
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "peekOfCode": "class CursoApiView(APIView):\n    def get(self, request):\n        cursos = Curso.objects.all()\n        serializer = CursoSerializer(cursos, many=True)\n        return Response(serializer.data)\n    def post(self, request):\n        serializer = CursoSerializer(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        serializer.save()\n        return Response(serializer.data, status=status.HTTP_201_CREATED)",
+        "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
+        "label": "AvaliacaoApiView",
+        "kind": 6,
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "peekOfCode": "class AvaliacaoApiView(APIView):\n    def get(self, request):\n        avaliacoes = Avaliacao.objects.all()\n        serializer = AvaliacaoSerializer(avaliacoes, many=True)\n        return Response(serializer.data)\n    def post(self, request):\n        serializer = AvaliacaoSerializer(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        serializer.save()\n        return Response(serializer.data, status=status.HTTP_201_CREATED)",
+        "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
         "label": "application",
         "kind": 5,
         "importPath": "escola.asgi",
@@ -226,7 +311,7 @@
         "kind": 5,
         "importPath": "escola.settings",
         "description": "escola.settings",
-        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'cursos'",
+        "peekOfCode": "ALLOWED_HOSTS = []\n# Application definition\nINSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'cursos',",
         "detail": "escola.settings",
         "documentation": {}
     },
@@ -235,7 +320,7 @@
         "kind": 5,
         "importPath": "escola.settings",
         "description": "escola.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'cursos'\n]\nMIDDLEWARE = [",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'cursos',\n    'rest_framework'\n]",
         "detail": "escola.settings",
         "documentation": {}
     },
@@ -352,7 +437,7 @@
         "kind": 5,
         "importPath": "escola.urls",
         "description": "escola.urls",
-        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n]",
+        "peekOfCode": "urlpatterns = [\n    path('api/v1/', include('cursos.urls')),\n    path('admin', admin.site.urls),\n    path('auth/', include('rest_framework.urls')),\n]",
         "detail": "escola.urls",
         "documentation": {}
     },
