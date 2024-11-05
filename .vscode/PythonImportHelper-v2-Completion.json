@@ -73,6 +73,22 @@
         "documentation": {}
     },
     {
+        "label": "viewsets",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
+        "label": "mixins",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "status",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -110,6 +126,22 @@
         "description": "django.urls",
         "isExtraImport": true,
         "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "get_object_or_404",
+        "importPath": "rest_framework.generics",
+        "description": "rest_framework.generics",
+        "isExtraImport": true,
+        "detail": "rest_framework.generics",
+        "documentation": {}
+    },
+    {
+        "label": "action",
+        "importPath": "rest_framework.decorators",
+        "description": "rest_framework.decorators",
+        "isExtraImport": true,
+        "detail": "rest_framework.decorators",
         "documentation": {}
     },
     {
@@ -256,7 +288,7 @@
         "kind": 5,
         "importPath": "cursos.urls",
         "description": "cursos.urls",
-        "peekOfCode": "urlpatterns = [\n    path('cursos/', CursosApiView.as_view(), name='cursos'),\n    path('cursos/<int:pk>', CursoApiView.as_view(), name='curso'),\n    path('avaliacoes/', AvaliacoesApiView.as_view(), name='avaliacoes'),\n    path('avaliacoes/<int:pk>', AvaliacaoApiView.as_view(), name='avaliacao')\n]",
+        "peekOfCode": "urlpatterns = [\n    path('cursos/', CursosApiView.as_view(), name='cursos'),\n    path('cursos/<int:curso_pk>/', CursoApiView.as_view(), name='curso'),\n    path('cursos/<int:curso_pk>/avaliacoes/', AvaliacoesApiView.as_view(), name='curso_avalicoes'),\n    path('cursos/<int:curso_pk>/avaliacoes/<int:avaliacao_pk>/', AvaliacoesApiView.as_view(), name='curso_avalicoes'),\n    path('avaliacoes/', AvaliacoesApiView.as_view(), name='avaliacoes'),\n    path('avaliacoes/<int:avaliacao_pk>/', AvaliacaoApiView.as_view(), name='avaliacao')\n]",
         "detail": "cursos.urls",
         "documentation": {}
     },
@@ -265,7 +297,7 @@
         "kind": 6,
         "importPath": "cursos.views",
         "description": "cursos.views",
-        "peekOfCode": "class CursosApiView(generics.ListCreateAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass CursoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\nclass AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):",
+        "peekOfCode": "class CursosApiView(generics.ListCreateAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass CursoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\n    def get_queryset(self):",
         "detail": "cursos.views",
         "documentation": {}
     },
@@ -274,7 +306,7 @@
         "kind": 6,
         "importPath": "cursos.views",
         "description": "cursos.views",
-        "peekOfCode": "class CursoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\nclass AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
+        "peekOfCode": "class CursoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\n    def get_queryset(self):\n        if self.kwargs.get('curso_pk'):\n            return self.queryset.filter(curso_id = self.kwargs.get('curso_pk'))\n        return self.queryset.all()",
         "detail": "cursos.views",
         "documentation": {}
     },
@@ -283,7 +315,7 @@
         "kind": 6,
         "importPath": "cursos.views",
         "description": "cursos.views",
-        "peekOfCode": "class AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\nclass AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
+        "peekOfCode": "class AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\n    def get_queryset(self):\n        if self.kwargs.get('curso_pk'):\n            return self.queryset.filter(curso_id = self.kwargs.get('curso_pk'))\n        return self.queryset.all()\nclass AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
         "detail": "cursos.views",
         "documentation": {}
     },
@@ -292,7 +324,7 @@
         "kind": 6,
         "importPath": "cursos.views",
         "description": "cursos.views",
-        "peekOfCode": "class AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
+        "peekOfCode": "class AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\n    def get_queryset(self):\n        if self.kwargs.get('curso_pk'):\n            return get_object_or_404(self.get_queryset(), curso_id=self.kwargs.get('curso_pk'), avaliacao_pk=self.kwargs.get('avaliacao_pk'))\n        return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('avaliacao_pk'))",
         "detail": "cursos.views",
         "documentation": {}
     },
