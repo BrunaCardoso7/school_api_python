@@ -65,6 +65,14 @@
         "documentation": {}
     },
     {
+        "label": "generics",
+        "importPath": "rest_framework",
+        "description": "rest_framework",
+        "isExtraImport": true,
+        "detail": "rest_framework",
+        "documentation": {}
+    },
+    {
         "label": "status",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -248,8 +256,17 @@
         "kind": 5,
         "importPath": "cursos.urls",
         "description": "cursos.urls",
-        "peekOfCode": "urlpatterns = [\n    path('cursos/', CursoApiView.as_view(), name='cursos'),\n    path('avaliacoes/', AvaliacaoApiView.as_view(), name='avaliacoes')\n]",
+        "peekOfCode": "urlpatterns = [\n    path('cursos/', CursosApiView.as_view(), name='cursos'),\n    path('cursos/<int:pk>', CursoApiView.as_view(), name='curso'),\n    path('avaliacoes/', AvaliacoesApiView.as_view(), name='avaliacoes'),\n    path('avaliacoes/<int:pk>', AvaliacaoApiView.as_view(), name='avaliacao')\n]",
         "detail": "cursos.urls",
+        "documentation": {}
+    },
+    {
+        "label": "CursosApiView",
+        "kind": 6,
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "peekOfCode": "class CursosApiView(generics.ListCreateAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass CursoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\nclass AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):",
+        "detail": "cursos.views",
         "documentation": {}
     },
     {
@@ -257,7 +274,16 @@
         "kind": 6,
         "importPath": "cursos.views",
         "description": "cursos.views",
-        "peekOfCode": "class CursoApiView(APIView):\n    def get(self, request):\n        cursos = Curso.objects.all()\n        serializer = CursoSerializer(cursos, many=True)\n        return Response(serializer.data)\n    def post(self, request):\n        serializer = CursoSerializer(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        serializer.save()\n        return Response(serializer.data, status=status.HTTP_201_CREATED)",
+        "peekOfCode": "class CursoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\nclass AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\nclass AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
+        "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
+        "label": "AvaliacoesApiView",
+        "kind": 6,
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "peekOfCode": "class AvaliacoesApiView(generics.ListCreateAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\nclass AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
         "detail": "cursos.views",
         "documentation": {}
     },
@@ -266,8 +292,26 @@
         "kind": 6,
         "importPath": "cursos.views",
         "description": "cursos.views",
-        "peekOfCode": "class AvaliacaoApiView(APIView):\n    def get(self, request):\n        avaliacoes = Avaliacao.objects.all()\n        serializer = AvaliacaoSerializer(avaliacoes, many=True)\n        return Response(serializer.data)\n    def post(self, request):\n        serializer = AvaliacaoSerializer(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        serializer.save()\n        return Response(serializer.data, status=status.HTTP_201_CREATED)",
+        "peekOfCode": "class AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
         "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
+        "label": "CursoApiView",
+        "kind": 6,
+        "importPath": "cursos.views_content-depreciet",
+        "description": "cursos.views_content-depreciet",
+        "peekOfCode": "class CursoApiView(APIView):\n    def get(self, request):\n        cursos = Curso.objects.all()\n        serializer = CursoSerializer(cursos, many=True)\n        return Response(serializer.data)\n    def post(self, request):\n        serializer = CursoSerializer(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        serializer.save()\n        return Response(serializer.data, status=status.HTTP_201_CREATED)",
+        "detail": "cursos.views_content-depreciet",
+        "documentation": {}
+    },
+    {
+        "label": "AvaliacaoApiView",
+        "kind": 6,
+        "importPath": "cursos.views_content-depreciet",
+        "description": "cursos.views_content-depreciet",
+        "peekOfCode": "class AvaliacaoApiView(APIView):\n    def get(self, request):\n        avaliacoes = Avaliacao.objects.all()\n        serializer = AvaliacaoSerializer(avaliacoes, many=True)\n        return Response(serializer.data)\n    def post(self, request):\n        serializer = AvaliacaoSerializer(data=request.data)\n        serializer.is_valid(raise_exception=True)\n        serializer.save()\n        return Response(serializer.data, status=status.HTTP_201_CREATED)",
+        "detail": "cursos.views_content-depreciet",
         "documentation": {}
     },
     {
