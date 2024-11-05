@@ -65,14 +65,6 @@
         "documentation": {}
     },
     {
-        "label": "generics",
-        "importPath": "rest_framework",
-        "description": "rest_framework",
-        "isExtraImport": true,
-        "detail": "rest_framework",
-        "documentation": {}
-    },
-    {
         "label": "viewsets",
         "importPath": "rest_framework",
         "description": "rest_framework",
@@ -129,7 +121,55 @@
         "documentation": {}
     },
     {
+        "label": "SimpleRouter",
+        "importPath": "rest_framework.routers",
+        "description": "rest_framework.routers",
+        "isExtraImport": true,
+        "detail": "rest_framework.routers",
+        "documentation": {}
+    },
+    {
+        "label": "AvaliacaoApiView",
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "isExtraImport": true,
+        "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
+        "label": "CursoApiView",
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "isExtraImport": true,
+        "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
         "label": "get_object_or_404",
+        "importPath": "rest_framework.generics",
+        "description": "rest_framework.generics",
+        "isExtraImport": true,
+        "detail": "rest_framework.generics",
+        "documentation": {}
+    },
+    {
+        "label": "generics",
         "importPath": "rest_framework.generics",
         "description": "rest_framework.generics",
         "isExtraImport": true,
@@ -150,14 +190,6 @@
         "description": "rest_framework.views",
         "isExtraImport": true,
         "detail": "rest_framework.views",
-        "documentation": {}
-    },
-    {
-        "label": "Response",
-        "importPath": "rest_framework.response",
-        "description": "rest_framework.response",
-        "isExtraImport": true,
-        "detail": "rest_framework.response",
         "documentation": {}
     },
     {
@@ -183,6 +215,14 @@
         "description": "pathlib",
         "isExtraImport": true,
         "detail": "pathlib",
+        "documentation": {}
+    },
+    {
+        "label": "router",
+        "importPath": "cursos.urls",
+        "description": "cursos.urls",
+        "isExtraImport": true,
+        "detail": "cursos.urls",
         "documentation": {}
     },
     {
@@ -284,6 +324,15 @@
         "documentation": {}
     },
     {
+        "label": "router",
+        "kind": 5,
+        "importPath": "cursos.urls",
+        "description": "cursos.urls",
+        "peekOfCode": "router = SimpleRouter()\nrouter.register('cursos', CursoApiViewSet)\nrouter.register('avaliacoes', AvaliacaoApiViewSet)\nurlpatterns = [\n    path('cursos/', CursosApiView.as_view(), name='cursos'),\n    path('cursos/<int:curso_pk>/', CursoApiView.as_view(), name='curso'),\n    path('cursos/<int:curso_pk>/avaliacoes/', AvaliacoesApiView.as_view(), name='curso_avalicoes'),\n    path('cursos/<int:curso_pk>/avaliacoes/<int:avaliacao_pk>/', AvaliacoesApiView.as_view(), name='curso_avalicoes'),\n    path('avaliacoes/', AvaliacoesApiView.as_view(), name='avaliacoes'),\n    path('avaliacoes/<int:avaliacao_pk>/', AvaliacaoApiView.as_view(), name='avaliacao')",
+        "detail": "cursos.urls",
+        "documentation": {}
+    },
+    {
         "label": "urlpatterns",
         "kind": 5,
         "importPath": "cursos.urls",
@@ -324,7 +373,25 @@
         "kind": 6,
         "importPath": "cursos.views",
         "description": "cursos.views",
-        "peekOfCode": "class AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\n    def get_queryset(self):\n        if self.kwargs.get('curso_pk'):\n            return get_object_or_404(self.get_queryset(), curso_id=self.kwargs.get('curso_pk'), avaliacao_pk=self.kwargs.get('avaliacao_pk'))\n        return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('avaliacao_pk'))",
+        "peekOfCode": "class AvaliacaoApiView(generics.RetrieveUpdateDestroyAPIView):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer\n    def get_queryset(self):\n        if self.kwargs.get('curso_pk'):\n            return get_object_or_404(self.get_queryset(), curso_id=self.kwargs.get('curso_pk'), avaliacao_pk=self.kwargs.get('avaliacao_pk'))\n        return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('avaliacao_pk'))\n# =========== API v2 ==============\nclass CursoApiViewSet(viewsets.ViewSet):\n    queryset = Curso.objects.all()",
+        "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
+        "label": "CursoApiViewSet",
+        "kind": 6,
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "peekOfCode": "class CursoApiViewSet(viewsets.ViewSet):\n    queryset = Curso.objects.all()\n    serializer_class = CursoSerializer\n    @action(detail=True, methods=['get'])\n    def avaliacoes (self, request, pk=None):\n        curso = self.get_object()\n        serializer = AvaliacaoSerializer(curso.avaliacoes.all(), many=True)\n        return Response(serializer.data)\n# class AvaliacaoApiViewSet(viewsets.ViewSet):\n#     queryset = Avaliacao.objects.all()",
+        "detail": "cursos.views",
+        "documentation": {}
+    },
+    {
+        "label": "AvaliacaoApiViewSet",
+        "kind": 6,
+        "importPath": "cursos.views",
+        "description": "cursos.views",
+        "peekOfCode": "class AvaliacaoApiViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):\n    queryset = Avaliacao.objects.all()\n    serializer_class = AvaliacaoSerializer",
         "detail": "cursos.views",
         "documentation": {}
     },
@@ -513,7 +580,7 @@
         "kind": 5,
         "importPath": "escola.urls",
         "description": "escola.urls",
-        "peekOfCode": "urlpatterns = [\n    path('api/v1/', include('cursos.urls')),\n    path('admin', admin.site.urls),\n    path('auth/', include('rest_framework.urls')),\n]",
+        "peekOfCode": "urlpatterns = [ \n    path('api/v1/', include('cursos.urls')),\n    path('api/v2/', include(router.urls)),\n    path('admin', admin.site.urls), \n    path('auth/', include('rest_framework.urls')),\n]",
         "detail": "escola.urls",
         "documentation": {}
     },
